@@ -24,3 +24,5 @@ dnf5 install -y --allowerasing kernel-surface kernel-surface-devel akmods
 ### Install Surface Linux Utilities
 dnf5 install -y iptsd
 
+rm -rf /tmp/* /var/tmp/*
+
