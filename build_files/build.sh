@@ -12,16 +12,15 @@ cp -avf "/ctx/system_files"/. /
 # List of rpmfusion packages can be found here:
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
-# this installs a package from fedora repos
-dnf5 install -y tmux
+### Surface Linux Repository
+dnf5 config-manager addrepo --from-repofile=https://pkg.surfacelinux.com/fedora/linux-surface.repo
+dnf5 config-manager setopt \
+    "linux-surface.baseurl=https://pkg.surfacelinux.com/fedora/f${SURFACE_RELEASEVER:?not set in the Containerfile}/" \
+    "linux-surface.skip_if_unavailable=0"
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+### Install Surface Linux Kernel & akmods
+dnf5 install -y --allowerasing kernel-surface kernel-surface-devel akmods
 
-#### Example for enabling a System Unit File
+### Install Surface Linux Utilities
+dnf5 install -y iptsd
 
-systemctl enable podman.socket
