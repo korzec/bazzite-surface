@@ -19,6 +19,11 @@ dnf5 config-manager setopt \
     "linux-surface.skip_if_unavailable=0"
 
 ### Install Surface Linux Kernel & akmods
+for pkg in kernel kernel{-core,-modules,-modules-core,-modules-extra,-tools-libs,-tools}; do
+    rpm --erase "${pkg}" --nodeps
+done
+rm -rf /usr/lib/modules
+
 dnf5 install -y --allowerasing kernel-surface kernel-surface-devel akmods
 
 ### Install Surface Linux Utilities
