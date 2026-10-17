@@ -20,7 +20,9 @@ dnf5 config-manager setopt \
 
 ### Install Surface Linux Kernel & akmods
 for pkg in kernel kernel{-core,-modules,-modules-core,-modules-extra,-tools-libs,-tools}; do
-    rpm --erase "${pkg}" --nodeps
+    if rpm -q "${pkg}" >/dev/null 2>&1; then
+        rpm --erase "${pkg}" --nodeps
+    fi
 done
 rm -rf /usr/lib/modules
 
