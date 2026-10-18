@@ -28,8 +28,12 @@ rm -rf /usr/lib/modules
 
 dnf5 install -y --allowerasing kernel-surface kernel-surface-devel akmods
 
+# Kernel RPM scriptlets create BLS entries that contain GRUB variables.
+# bootc generates its own boot entries during deployment; these RPM entries
+# can prevent bootc from resolving the kernel and initramfs paths correctly.
+rm -rf /boot/loader/entries
+
 ### Install Surface Linux Utilities
 dnf5 install -y iptsd
 
 rm -rf /tmp/* /var/tmp/*
-
